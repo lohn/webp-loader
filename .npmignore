@@ -1,1 +1,7 @@
 test/
+.idea/
+scripts/
+.github/
+.editorconfig
+.eslintignore
+.eslintrc.json
