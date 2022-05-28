@@ -4,10 +4,28 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/** @type {import("webpack").LoaderDefinitionFunction} */
-module.exports = function (content) {
-  this.async();
-  import('./index.mjs').then((loader) => loader.default.call(this, content));
-};
+import imagemin from 'imagemin';
+import imageminWebp from 'imagemin-webp';
 
-module.exports.raw = true;
+/** @type {import("webpack").LoaderDefinitionFunction} */
+export default function webpLoader (content) {
+  const callback = this.async();
+
+  if (typeof this.cacheable === 'function') {
+    this.cacheable();
+  }
+
+  let options;
+  if (typeof this.getOptions === 'function') {
+    options = this.getOptions();
+  } else {
+    options = this.query;
+  }
+
+  imagemin
+    .buffer(content, { plugins: [imageminWebp(options)] })
+    .then((data) => callback(null, data))
+    .catch((err) => callback(err));
+}
+
+export const raw = true;

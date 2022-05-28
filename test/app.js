@@ -1,2 +1,2 @@
-require('./test.jpg');
-require('./test.png');
+require('./test.jpg?webp');
+require('./test.png?webp');

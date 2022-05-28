@@ -1,26 +1,50 @@
-# webp-loader
+# @m8x/webp-loader
 
-[![Build Status](https://travis-ci.org/kavu/webp-loader.svg?branch=master)](https://travis-ci.org/kavu/webp-loader)
+> forked from [webp-loader](https://www.npmjs.com/package/webp-loader) v0.6.0.
+
+[![Build Status](https://github.com/m8x/webp-loader/actions/workflows/test.yaml/badge.svg?branch=master)](https://github.com/m8x/webp-loader/actions/workflows/test.yaml)
 
 [WebP](https://developers.google.com/speed/webp/) image loader & converter loader for Webpack.
 
 ## Install
 
 ```sh
-npm install webp-loader --save-dev
+npm install --save-dev @m8x/webp-loader
 ```
 
 ## Usage
 
-Here is the example of using `webp-loader` along with common [file-loader](https://github.com/webpack/file-loader):
+Here is the example of using `@m8x/webp-loader`:
 
 ```javascript
-loaders: [
+// webpack@5
+rules: [
   {
-    test: /\.(jpe?g|png)$/i,
-    loaders: [
-      'file-loader',
-      'webp-loader'
+    test: /\.(png|jpe?g)$/i,
+    resourceQuery: /webp/,
+    type: 'asset/resource',
+    generator: {
+      filename: '[name].[hash][ext].webp'
+    },
+    loader: '@m8x/webp-loader'
+  }
+]
+
+// webpack@4
+rules: [
+  {
+    test: /\.(png|jpe?g)$/i,
+    resourceQuery: /webp/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash].[ext].webp',
+        },
+      },
+      {
+        loader: '@m8x/webp-loader'
+      }
     ]
   }
 ]
@@ -29,28 +53,42 @@ loaders: [
 Unfortunately, if you wish to pass an options for internal [imagemin-webp](https://github.com/imagemin/imagemin-webp) you should pass a options in JSON form:
 
 ```javascript
-loaders: [
+// webpack@5
+rules: [
   {
-    test: /\.(jpe?g|png)$/i,
-    loaders: [
-      'file-loader',
-      'webp-loader?{quality: 13}'
-    ]
+    test: /\.(png|jpe?g)$/i,
+    resourceQuery: /webp/,
+    type: 'asset/resource',
+    generator: {
+      filename: '[name].[hash][ext].webp'
+    },
+    loader: '@m8x/webp-loader',
+    options: {
+      quality: 10
+    }
   }
 ]
-```
 
-Normally you don't want to convert all of your images to WebP format, you just want to make alternate versions. You can use [multi-loader](https://github.com/webpack-contrib/multi-loader) to achieve it:
-
-```javascript
-loaders: [
+// webpack@4
+rules: [
   {
-    test: /\.(jpe?g|png)$/i,
-    loader: multi(
-      'file-loader?name=[name].[ext].webp!webp-loader?{quality: 95}'
-      'file-loader?name=[name].[ext]',
-    )
-  },
+    test: /\.(png|jpe?g)$/i,
+    resourceQuery: /webp/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash].[ext].webp',
+        },
+      },
+      {
+        loader: '@m8x/webp-loader',
+        options: {
+          quality: 10
+        }
+      }
+    ]
+  }
 ]
 ```
 
