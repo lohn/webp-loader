@@ -3,12 +3,10 @@
   "version": "0.6.0",
   "description": "WebP image loader & converter for Webpack",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "yarn test:webpack3 && yarn test:webpack4 && yarn test:webpack5",
-    "lint": "eslint index.js test/*.js",
-    "test:webpack3": "WEBPACK_VERSION=3.x ./scripts/test.sh",
-    "test:webpack4": "WEBPACK_VERSION=4.x ./scripts/test.sh",
-    "test:webpack5": "WEBPACK_VERSION=5.x ./scripts/test.sh"
+    "test": "npx webpack --config test/webpack-5.x.config.js",
+    "lint": "eslint . --ext .js,.mjs"
   },
   "repository": {
     "type": "git",
@@ -30,17 +28,20 @@
   "homepage": "https://github.com/m8x/webp-loader",
   "dependencies": {
     "imagemin": "^8.0.1",
-    "imagemin-webp": "^7.0.0",
-    "loader-utils": "^3.2.0"
+    "imagemin-webp": "^7.0.0"
   },
   "devDependencies": {
-    "file-loader": "^6.2.0",
-    "multi-loader": "^0.1.0",
+    "eslint": "^8.16.0",
+    "eslint-config-semistandard": "^16.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2"
   },
   "peerDependencies": {
-    "webpack": ">=3",
+    "webpack": ">=4",
     "webpack-cli": "*"
   },
   "engines": {
