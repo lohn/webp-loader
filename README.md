@@ -17,6 +17,7 @@ npm install --save-dev @m8x/webp-loader
 Here is the example of using `@m8x/webp-loader`:
 
 ```javascript
+// webpack@5
 rules: [
   {
     test: /\.(png|jpe?g)$/i,
@@ -25,7 +26,22 @@ rules: [
     generator: {
       filename: '[name].[hash][ext].webp'
     },
+    loader: '@m8x/webp-loader'
+  }
+]
+
+// webpack@4
+rules: [
+  {
+    test: /\.(png|jpe?g)$/i,
+    resourceQuery: /webp/,
     use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash].[ext].webp',
+        },
+      },
       {
         loader: '@m8x/webp-loader'
       }
@@ -37,6 +53,7 @@ rules: [
 Unfortunately, if you wish to pass an options for internal [imagemin-webp](https://github.com/imagemin/imagemin-webp) you should pass a options in JSON form:
 
 ```javascript
+// webpack@5
 rules: [
   {
     test: /\.(png|jpe?g)$/i,
@@ -45,7 +62,25 @@ rules: [
     generator: {
       filename: '[name].[hash][ext].webp'
     },
+    loader: '@m8x/webp-loader',
+    options: {
+      quality: 10
+    }
+  }
+]
+
+// webpack@4
+rules: [
+  {
+    test: /\.(png|jpe?g)$/i,
+    resourceQuery: /webp/,
     use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash].[ext].webp',
+        },
+      },
       {
         loader: '@m8x/webp-loader',
         options: {

@@ -15,7 +15,12 @@ export default function webpLoader (content) {
     this.cacheable();
   }
 
-  const options = this.getOptions();
+  let options;
+  if (typeof this.getOptions === 'function') {
+    options = this.getOptions();
+  } else {
+    options = this.query;
+  }
 
   imagemin
     .buffer(content, { plugins: [imageminWebp(options)] })

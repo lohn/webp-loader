@@ -17,14 +17,10 @@ module.exports = [
           generator: {
             filename: '[name].[hash][ext].webp',
           },
-          use: [
-            {
-              loader: './index.js',
-              options: {
-                quality: 50,
-              },
-            },
-          ],
+          loader: './index.js',
+          options: {
+            quality: 50,
+          },
         },
       ],
     },

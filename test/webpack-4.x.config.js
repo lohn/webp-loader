@@ -6,18 +6,20 @@ module.exports = [
     entry: './test/app.js',
     output: {
       path: path.resolve('test/results'),
-      filename: 'app.[fullhash].js',
+      filename: 'app.[hash].js',
     },
     module: {
       rules: [
         {
           test: /\.(png|jpe?g)$/i,
           resourceQuery: /webp/,
-          type: 'asset/resource',
-          generator: {
-            filename: '[name].[hash][ext].webp',
-          },
           use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[hash].[ext].webp',
+              },
+            },
             {
               loader: './index.js',
               options: {
