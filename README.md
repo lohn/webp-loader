@@ -2,7 +2,7 @@
 
 > forked from [webp-loader](https://www.npmjs.com/package/webp-loader) v0.6.0.
 
-[![Build Status](https://github.com/m8x/webp-loader/actions/workflows/test.yaml/badge.svg?branch=master)](https://github.com/m8x/webp-loader/actions/workflows/test.yaml)
+[![Build Status](https://github.com/m8x/webp-loader/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/m8x/webp-loader/actions/workflows/test.yaml)
 
 [WebP](https://developers.google.com/speed/webp/) image loader & converter loader for Webpack.
 
